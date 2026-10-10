@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#141310" />
+    <meta name="description" content="Forge a fantasy world: invent its realms, characters, creatures, relics, and quests." />
+    <title>Mythos Forge — Worldbuilding Studio</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script defer src="/js/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a href="/" class="brand" aria-label="Mythos Forge home">
+          <span class="brand-mark">✺</span>
+          <span><strong>mythos forge</strong><small>WORLDBUILDING STUDIO</small></span>
+        </a>
+        <div class="side-divider"></div>
+        <div class="side-section-head"><span>YOUR WORLDS</span><button class="tiny-add" id="open-world-modal" aria-label="Create a world">+</button></div>
+        <div class="world-list" id="world-list"></div>
+        <button class="new-world-button" id="open-world-modal-secondary"><span>＋</span> Forge a new world</button>
+        <div class="sidebar-bottom">
+          <div class="sidebar-orbit" aria-hidden="true"><span>✦</span></div>
+          <p>Every world<br />begins with <i>one idea.</i></p>
+          <span class="sidebar-version">MYTHOS FORGE · 1.0</span>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>STUDIO</span><span>/</span><strong id="breadcrumb-world">LOADING WORLD</strong></div>
+          <div class="top-actions">
+            <button class="button button-quiet" id="export-world" title="Download this world as JSON">↓ <span>Export world</span></button>
+            <button class="button button-outline" id="generate-world">✧ <span>Generate starter lore</span></button>
+            <div class="avatar" title="Worldbuilder">W</div>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <section class="world-hero">
+            <div class="hero-copy">
+              <div class="eyebrow"><span class="eyebrow-mark">✦</span> THE WORLD AT A GLANCE</div>
+              <div class="hero-title-row"><h1 id="world-title">Loading…</h1><span class="genre-tag" id="world-genre"></span></div>
+              <p class="world-premise" id="world-premise"></p>
+              <div class="world-meta"><span><span class="meta-icon">✳</span> SEED <strong id="world-seed"></strong></span><span class="meta-separator"></span><span><span class="meta-icon">◷</span> FORGED <strong id="world-created"></strong></span></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="hero-moon"></div><div class="hero-ring ring-one"></div><div class="hero-ring ring-two"></div><div class="hero-mountain mountain-back"></div><div class="hero-mountain mountain-front"></div><span class="hero-star star-a">✦</span><span class="hero-star star-b">·</span><span class="hero-star star-c">✧</span>
+            </div>
+          </section>
+
+          <section class="stats-grid" aria-label="World statistics">
+            <article class="stat-card"><div class="stat-top"><span>REALMS</span><span class="stat-icon stat-gold">⌂</span></div><strong id="stat-realm">0</strong><small>Places to discover</small></article>
+            <article class="stat-card"><div class="stat-top"><span>CHARACTERS</span><span class="stat-icon stat-violet">♙</span></div><strong id="stat-character">0</strong><small>Lives in this world</small></article>
+            <article class="stat-card"><div class="stat-top"><span>CREATURES</span><span class="stat-icon stat-green">✿</span></div><strong id="stat-creature">0</strong><small>Beyond the ordinary</small></article>
+            <article class="stat-card"><div class="stat-top"><span>CONNECTIONS</span><span class="stat-icon stat-blue">⌁</span></div><strong id="stat-links">0</strong><small>Threads between things</small></article>
+          </section>
+
+          <section class="library-section">
+            <div class="library-heading">
+              <div><div class="eyebrow"><span class="eyebrow-mark">✧</span> WORLD LIBRARY</div><h2>Everything has a <i>story.</i></h2></div>
+              <div class="library-actions"><button class="button button-outline button-small" id="add-link-button">⌁ <span>Connect entries</span></button><button class="button button-gold button-small" id="add-entry-button">＋ <span>Add to world</span></button></div>
+            </div>
+            <div class="view-toolbar"><div class="filter-tabs" id="filter-tabs" role="tablist" aria-label="Filter world entries"><button class="filter-tab active" data-filter="all">All <span id="count-all">0</span></button><button class="filter-tab" data-filter="realm">Realms <span id="count-realm">0</span></button><button class="filter-tab" data-filter="character">Characters <span id="count-character">0</span></button><button class="filter-tab" data-filter="creature">Creatures <span id="count-creature">0</span></button><button class="filter-tab" data-filter="quest">Quests <span id="count-quest">0</span></button><button class="filter-tab" data-filter="relic">Relics <span id="count-relic">0</span></button></div>
+              <div class="display-controls"><label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Search the lore…" aria-label="Search entries" /></label><button class="icon-toggle active" id="grid-view" aria-label="Grid view" title="Grid view">▦</button><button class="icon-toggle" id="map-view" aria-label="Connection map" title="Connection map">⌘</button></div>
+            </div>
+            <div id="entry-grid" class="entry-grid"></div>
+            <div id="connection-map" class="connection-map hidden"></div>
+          </section>
+          <footer class="page-footer"><span>MYTHOS FORGE <span class="footer-dot">✦</span> A WORLD IS A WEB OF STORIES</span><span id="entry-total">0 entries</span></footer>
+        </div>
+      </main>
+    </div>
+
+    <dialog class="modal" id="world-modal">
+      <form method="dialog" class="modal-close-wrap"><button class="modal-x" aria-label="Close">×</button></form>
+      <div class="modal-heading"><span class="modal-sigil">✺</span><div><div class="eyebrow">A NEW BEGINNING</div><h2>Forge a world</h2><p>Give your imagination a place to live.</p></div></div>
+      <form id="world-form" class="modal-form">
+        <label>World name<input name="name" maxlength="80" required placeholder="e.g. The Shattered Meridian" /></label>
+        <div class="form-row"><label>Genre<input name="genre" maxlength="70" required placeholder="Mythic fantasy" /></label><label>Seed <input name="seed" type="number" placeholder="Random" /></label></div>
+        <label>World premise<textarea name="premise" maxlength="320" required rows="3" placeholder="What makes this world unlike any other?"></textarea></label>
+        <div class="modal-actions"><button type="button" class="button button-quiet" data-close="world-modal">Cancel</button><button class="button button-gold" type="submit">✧ Create world</button></div>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="entry-modal">
+      <form method="dialog" class="modal-close-wrap"><button class="modal-x" aria-label="Close">×</button></form>
+      <div class="modal-heading"><span class="modal-sigil" id="entry-sigil">✦</span><div><div class="eyebrow">ADD A THREAD TO THE TAPESTRY</div><h2 id="entry-modal-title">New world entry</h2><p>Every detail gives the world another layer.</p></div></div>
+      <form id="entry-form" class="modal-form">
+        <input type="hidden" name="id" />
+        <div class="form-row"><label>Entry type<select name="kind" required><option value="realm">Realm</option><option value="character">Character</option><option value="creature">Creature</option><option value="quest">Quest</option><option value="relic">Relic</option></select></label><label>Name<input name="name" maxlength="90" required placeholder="The name they will remember" /></label></div>
+        <label>Title or epithet<input name="subtitle" maxlength="100" required placeholder="A phrase that captures its nature" /></label>
+        <label>Description<textarea name="description" maxlength="800" required rows="3" placeholder="What is its story? What details make it vivid?"></textarea></label>
+        <label>Traits <small>Separate with · or commas</small><input name="traits" maxlength="240" required placeholder="ancient · luminous · secretive" /></label>
+        <div class="modal-actions"><button type="button" class="button button-quiet" data-close="entry-modal">Cancel</button><button class="button button-gold" type="submit">Save entry</button></div>
+      </form>
+    </dialog>
+
+    <dialog class="modal modal-narrow" id="link-modal">
+      <form method="dialog" class="modal-close-wrap"><button class="modal-x" aria-label="Close">×</button></form>
+      <div class="modal-heading"><span class="modal-sigil">⌁</span><div><div class="eyebrow">TIE TWO STORIES TOGETHER</div><h2>Make a connection</h2><p>Relationships turn a list into a living world.</p></div></div>
+      <form id="link-form" class="modal-form">
+        <label>First entry<select name="sourceId" required></select></label>
+        <label>Connection<select name="label" required><option>is allied with</option><option>is in conflict with</option><option>is the home of</option><option>is searching for</option><option>was created by</option><option>guards</option><option>is bound to</option><option>owes a debt to</option><option>custom relation</option></select></label>
+        <label>Second entry<select name="targetId" required></select></label>
+        <div class="modal-actions"><button type="button" class="button button-quiet" data-close="link-modal">Cancel</button><button class="button button-gold" type="submit">Connect entries</button></div>
+      </form>
+    </dialog>
+
+    <dialog class="modal modal-narrow" id="detail-modal"><div id="detail-content"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
